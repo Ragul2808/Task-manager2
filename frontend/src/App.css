@@ -9,7 +9,7 @@ h1{
 }
 
 
-.todo-wrapper{
+.frontend-wrapper{
   background-color: #353434;
   padding: 2%;
   width: fit-content;
@@ -23,7 +23,7 @@ h1{
   
 }
 
-.todo-input{
+.frontend-input{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,7 +33,7 @@ h1{
   
 }
 
-.todo-input-item{
+.frontend-input-item{
   margin-right: 25px;
   display: flex;
   flex-direction: column;
@@ -41,18 +41,18 @@ h1{
   
 }
 
-.todo-input-item label{
+.frontend-input-item label{
   margin-bottom: 10px;
   font-weight: bold;
 }
 
-.todo-input-item input {
+.frontend-input-item input {
   border: none;
   padding: 8px;
   width: 250px;
 }
 
-.todo-input-item input:focus{
+.frontend-input-item input:focus{
   outline: 2px solid rgb(0, 230, 122);
 }
 
@@ -95,12 +95,12 @@ h1{
 
 
 
-.todo-list{
+.frontend-list{
   display: flex;
   flex-direction: column;
 }
 
-.todo-list-item{
+.frontend-list-item{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -112,14 +112,14 @@ h1{
   box-shadow: 0px 2px 4px rgb(39, 38, 38);
 }
 
-.todo-list-item h3{
+.frontend-list-item h3{
   font-size: 25px;
   color: rgb(0, 230, 122);
   font-weight: bold;
   margin: 0px;
 }
 
-.todo-list-item p{
+.frontend-list-item p{
   margin-top: 8px;
   font-size: 14px;
   color: rgb(179, 178, 178);

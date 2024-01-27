@@ -5,10 +5,10 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
 
 function App() {
-  const [allTodos, setAllTodos] = useState([]);
-  const [newTodoTitle, setNewTodoTitle] = useState('');
+  const [allFrontends, setAllFrontends] = useState([]);
+  const [newfrontendTitle, setNewfrontendTitle] = useState('');
   const [newDescription, setNewDescription] = useState('');
-  const [completedTodos, setCompletedTodos] = useState([]);
+  const [completedFrontends, setCompletedFrontends] = useState([]);
   const [isCompletedScreen, setIsCompletedScreen] = useState(false);
 
   useEffect(() => {
@@ -18,60 +18,60 @@ function App() {
   const fetchTasks = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:3004/api/v1/tasks');
-      setAllTodos(response.data);
+      setAllFrontends(response.data);
     } catch (error) {
       console.error('Error fetching tasks:', error);
     }
   };
 
-  const handleAddNewToDo = async () => {
+  const handleAddNewfrontend = async () => {
     try {
       const response = await axios.post('http://127.0.0.1:3004/api/v1/tasks', {
-        title: newTodoTitle,
+        title: newfrontendTitle,
         description: newDescription,
         completed: false,
       });
-      setAllTodos([...allTodos, response.data]);
+      setAllFrontends([...allFrontends, response.data]);
       setNewDescription('');
-      setNewTodoTitle('');
+      setNewfrontendTitle('');
     } catch (error) {
       console.error('Error adding new task:', error);
     }
   };
 
   useEffect (() => {
-    let savedTodos = JSON.parse (localStorage.getItem ('todolist'));
-    let savedCompletedToDos = JSON.parse (
-      localStorage.getItem ('completedTodos')
+    let savedFrontends = JSON.parse (localStorage.getItem ('frontendlist'));
+    let savedCompletedFrontends = JSON.parse (
+      localStorage.getItem ('completedFrontends')
     );
-    if (savedTodos) {
-      setAllTodos (savedTodos);
+    if (savedFrontends) {
+      setAllFrontends (savedFrontends);
     }
 
-    if (savedCompletedToDos) {
-      setCompletedTodos (savedCompletedToDos);
+    if (savedCompletedFrontends) {
+      setCompletedFrontends (savedCompletedFrontends);
     }
   }, []);
 
-  const handleToDoDelete = index => {
-    let reducedTodos = [...allTodos];
-    reducedTodos.splice (index,1);
+  const handlefrontendDelete = index => {
+    let reducedFrontends = [...allFrontends];
+    reducedFrontends.splice (index,1);
     // console.log (index);
 
-    // console.log (reducedTodos);
-    localStorage.setItem ('todolist', JSON.stringify (reducedTodos));
-    setAllTodos (reducedTodos);
+    // console.log (reducedFrontends);
+    localStorage.setItem ('frontendlist', JSON.stringify (reducedFrontends));
+    setAllFrontends (reducedFrontends);
   };
 
-  const handleCompletedTodoDelete = index => {
-    let reducedCompletedTodos = [...completedTodos];
-    reducedCompletedTodos.splice (index);
-    // console.log (reducedCompletedTodos);
+  const handleCompletedfrontendDelete = index => {
+    let reducedCompletedFrontends = [...completedFrontends];
+    reducedCompletedFrontends.splice (index);
+    // console.log (reducedCompletedFrontends);
     localStorage.setItem (
-      'completedTodos',
-      JSON.stringify (reducedCompletedTodos)
+      'completedFrontends',
+      JSON.stringify (reducedCompletedFrontends)
     );
-    setCompletedTodos (reducedCompletedTodos);
+    setCompletedFrontends (reducedCompletedFrontends);
   };
 
   const handleComplete = index => {
@@ -85,42 +85,42 @@ function App() {
     var finalDate =
       dd + '-' + mm + '-' + yyyy + ' at ' + hh + ':' + minutes + ':' + ss;
 
-    let filteredTodo = {
-      ...allTodos[index],
+    let filteredfrontend = {
+      ...allFrontends[index],
       completedOn: finalDate,
     };
 
-    // console.log (filteredTodo);
+    // console.log (filteredfrontend);
 
-    let updatedCompletedList = [...completedTodos, filteredTodo];
+    let updatedCompletedList = [...completedFrontends, filteredfrontend];
     console.log (updatedCompletedList);
-    setCompletedTodos (updatedCompletedList);
+    setCompletedFrontends (updatedCompletedList);
     localStorage.setItem (
-      'completedTodos',
+      'completedFrontends',
       JSON.stringify (updatedCompletedList)
     );
     // console.log (index);
 
-    handleToDoDelete (index);
+    handlefrontendDelete (index);
   };
 
   return (
     <div className="App">
       <h1>Task Manager</h1>
 
-      <div className="todo-wrapper">
+      <div className="frontend-wrapper">
 
-        <div className="todo-input">
-          <div className="todo-input-item">
-            <label>Title:</label>
+        <div className="frontend-input">
+          <div className="frontend-input-item">
+            <label>Task:</label>
             <input
               type="text"
-              value={newTodoTitle}
-              onChange={e => setNewTodoTitle (e.target.value)}
+              value={newfrontendTitle}
+              onChange={e => setNewfrontendTitle (e.target.value)}
               placeholder="What's the title of your Task?"
             />
           </div>
-          <div className="todo-input-item">
+          <div className="frontend-input-item">
             <label>Description:</label>
             <input
               type="text"
@@ -129,11 +129,11 @@ function App() {
               placeholder="What's the description of your Task?"
             />
           </div>
-          <div className="todo-input-item">
+          <div className="frontend-input-item">
             <button
               className="primary-btn"
               type="button"
-              onClick={handleAddNewToDo}
+              onClick={handleAddNewfrontend}
             >
               Add
             </button>
@@ -153,11 +153,11 @@ function App() {
             Completed
           </button>
         </div>
-        <div className="todo-list">
+        <div className="frontend-list">
 
           {isCompletedScreen === false &&
-            allTodos.map ((item, index) => (
-              <div className="todo-list-item" key={index}>
+            allFrontends.map ((item, index) => (
+              <div className="frontend-list-item" key={index}>
                 <div>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
@@ -167,7 +167,7 @@ function App() {
                   <AiOutlineDelete
                     title="Delete?"
                     className="icon"
-                    onClick={() => handleToDoDelete (index)}
+                    onClick={() => handlefrontendDelete (index)}
                   />
                   <BsCheckLg
                     title="Completed?"
@@ -179,8 +179,8 @@ function App() {
             ))}
 
           {isCompletedScreen === true &&
-            completedTodos.map ((item, index) => (
-              <div className="todo-list-item" key={index}>
+            completedFrontends.map ((item, index) => (
+              <div className="frontend-list-item" key={index}>
                 <div>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
@@ -189,7 +189,7 @@ function App() {
                 <div>
                   <AiOutlineDelete
                     className="icon"
-                    onClick={() => handleCompletedTodoDelete (index)}
+                    onClick={() => handleCompletedfrontendDelete (index)}
                   />
                 </div>
               </div>
