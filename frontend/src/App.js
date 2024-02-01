@@ -4,6 +4,8 @@ import './App.css';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
 
+const API_BASE_URL = 'http://127.0.0.1:3000/api/v1/tasks';
+
 function App() {
   const [allFrontends, setAllFrontends] = useState([]);
   const [newfrontendTitle, setNewfrontendTitle] = useState('');
@@ -17,7 +19,8 @@ function App() {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:3004/api/v1/tasks');
+      const response = await axios.get(API_BASE_URL);
+      console.log('Fetched tasks:', response.data);
       setAllFrontends(response.data);
     } catch (error) {
       console.error('Error fetching tasks:', error);
@@ -26,7 +29,7 @@ function App() {
 
   const handleAddNewfrontend = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:3004/api/v1/tasks', {
+      const response = await axios.post(API_BASE_URL, {
         title: newfrontendTitle,
         description: newDescription,
         completed: false,
@@ -39,71 +42,45 @@ function App() {
     }
   };
 
-  useEffect (() => {
-    let savedFrontends = JSON.parse (localStorage.getItem ('frontendlist'));
-    let savedCompletedFrontends = JSON.parse (
-      localStorage.getItem ('completedFrontends')
-    );
-    if (savedFrontends) {
-      setAllFrontends (savedFrontends);
+  const handlefrontendDelete = async (taskId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/${taskId}`);
+      let reducedFrontends = allFrontends.filter((task) => task.id !== taskId);
+      setAllFrontends(reducedFrontends);
+    } catch (error) {
+      console.error('Error deleting task:', error);
     }
-
-    if (savedCompletedFrontends) {
-      setCompletedFrontends (savedCompletedFrontends);
-    }
-  }, []);
-
-  const handlefrontendDelete = index => {
-    let reducedFrontends = [...allFrontends];
-    reducedFrontends.splice (index,1);
-    // console.log (index);
-
-    // console.log (reducedFrontends);
-    localStorage.setItem ('frontendlist', JSON.stringify (reducedFrontends));
-    setAllFrontends (reducedFrontends);
   };
 
-  const handleCompletedfrontendDelete = index => {
-    let reducedCompletedFrontends = [...completedFrontends];
-    reducedCompletedFrontends.splice (index);
-    // console.log (reducedCompletedFrontends);
-    localStorage.setItem (
-      'completedFrontends',
-      JSON.stringify (reducedCompletedFrontends)
-    );
-    setCompletedFrontends (reducedCompletedFrontends);
-  };
-
-  const handleComplete = index => {
-    const date = new Date ();
-    var dd = date.getDate ();
-    var mm = date.getMonth () + 1;
-    var yyyy = date.getFullYear ();
-    var hh = date.getHours ();
-    var minutes = date.getMinutes ();
-    var ss = date.getSeconds ();
-    var finalDate =
-      dd + '-' + mm + '-' + yyyy + ' at ' + hh + ':' + minutes + ':' + ss;
+  const handleComplete = (index) => {
+    const date = new Date();
+    const formattedDate = date.toISOString(); // Convert the date to a format that the backend can understand
 
     let filteredfrontend = {
       ...allFrontends[index],
-      completedOn: finalDate,
+      completedOn: formattedDate,
     };
 
-    // console.log (filteredfrontend);
-
     let updatedCompletedList = [...completedFrontends, filteredfrontend];
-    console.log (updatedCompletedList);
-    setCompletedFrontends (updatedCompletedList);
-    localStorage.setItem (
+    console.log(updatedCompletedList);
+    setCompletedFrontends(updatedCompletedList);
+    localStorage.setItem(
       'completedFrontends',
-      JSON.stringify (updatedCompletedList)
+      JSON.stringify(updatedCompletedList)
     );
-    // console.log (index);
-
-    handlefrontendDelete (index);
   };
 
+  const handleCompletedfrontendDelete = async (index) => {
+    try {
+      const completedTask = completedFrontends[index];
+      await axios.delete(`${API_BASE_URL}/${completedTask.id}`);
+      let updatedCompletedList = [...completedFrontends];
+      updatedCompletedList.splice(index, 1);
+      setCompletedFrontends(updatedCompletedList);
+    } catch (error) {
+      console.error('Error deleting completed task:', error);
+    }
+  };
   return (
     <div className="App">
       <h1>Task Manager</h1>
