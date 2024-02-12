@@ -9,7 +9,7 @@ h1{
 }
 
 
-.frontend-wrapper{
+.Task-wrapper{
   background-color: #353434;
   padding: 2%;
   width: fit-content;
@@ -23,7 +23,7 @@ h1{
   
 }
 
-.frontend-input{
+.Task-input{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,7 +33,7 @@ h1{
   
 }
 
-.frontend-input-item{
+.Task-input-item{
   margin-right: 25px;
   display: flex;
   flex-direction: column;
@@ -41,18 +41,18 @@ h1{
   
 }
 
-.frontend-input-item label{
+.Task-input-item label{
   margin-bottom: 10px;
   font-weight: bold;
 }
 
-.frontend-input-item input {
+.Task-input-item input {
   border: none;
   padding: 8px;
   width: 250px;
 }
 
-.frontend-input-item input:focus{
+.Task-input-item input:focus{
   outline: 2px solid rgb(0, 230, 122);
 }
 
@@ -95,12 +95,12 @@ h1{
 
 
 
-.frontend-list{
+.Task-list{
   display: flex;
   flex-direction: column;
 }
 
-.frontend-list-item{
+.Task-list-item{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -112,14 +112,14 @@ h1{
   box-shadow: 0px 2px 4px rgb(39, 38, 38);
 }
 
-.frontend-list-item h3{
+.Task-list-item h3{
   font-size: 25px;
   color: rgb(0, 230, 122);
   font-weight: bold;
   margin: 0px;
 }
 
-.frontend-list-item p{
+.Task-list-item p{
   margin-top: 8px;
   font-size: 14px;
   color: rgb(179, 178, 178);
