@@ -28,24 +28,30 @@ class Api::V1::TasksController < ApplicationController
     end
   end
   
+  
   def destroy
-    if @task.destroy
-      head :no_content
+    @task = Task.find_by(id: params[:id])
+  
+    if @task
+      @task.destroy
+      render json: { message: 'Task successfully destroyed' }, status: :ok
     else
-      render json: { error: 'Failed to delete task' }, status: :unprocessable_entity
+      render json: { error: "Task with ID #{params[:id]} not found" }, status: :not_found
     end
   end
+  
 
   private
 
   def set_task
-    @task = Task.find_by(id: params[:id])
-
-    unless @task
-      Rails.logger.error("Task not found with ID: #{params[:id]}")
-      render json: { error: 'Task not found' }, status: :not_found
-    end
+    task_id = params[:id]
+    Rails.logger.info("Fetching task with ID: #{task_id}")
+    @task = Task.find(task_id)
+  rescue ActiveRecord::RecordNotFound
+    Rails.logger.error("Task not found with ID: #{task_id}")
+    # Handle the case where the task doesn't exist
   end
+  
 
   def task_params
     params.require(:task).permit(:title, :description, :completed)

@@ -5,7 +5,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
 import CommentContainer from './CommentContainer';
 
-const API_BASE_URL = 'http://127.0.0.1:3005/api/v1/tasks';
+const API_BASE_URL = 'http://127.0.0.1:3000/api/v1/tasks';
 
 function App() {
   const [allTasks, setAllTasks] = useState([]);
@@ -154,10 +154,10 @@ function App() {
                 <div>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
+                  <CommentContainer taskId={item.id} />
                 </div>
                 <div>
-                  <CommentContainer />
-                  <AiOutlineDelete
+                  <AiOutlineDelete  
                     title="Delete?"
                     className="icon"
                     onClick={() => TaskDelete(item.id, index)}
@@ -172,7 +172,7 @@ function App() {
             ))}
           {isCompletedScreen === true &&
             completedTasks.map((item, index) => (
-              <div className="Task-list-item" key={item}>
+              <div className="Task-list-item" key={item.id}>
                 <div>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
@@ -184,7 +184,6 @@ function App() {
                   <AiOutlineDelete
                     className="icon"
                     onClick={() => CompletedTaskDelete(item.id, index)}
-                  
                   />
                 </div>
               </div>
